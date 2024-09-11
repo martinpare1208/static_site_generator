@@ -19,6 +19,9 @@ class TextNode:
   def get_url(self):
     return self.__url
   
+  def get_text_type(self):
+    return self.__text_type
+  
   def __repr__(self):
     return f'TextNode({self.__text}, {self.__text_type}, {self.__url})'
 

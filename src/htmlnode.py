@@ -26,4 +26,7 @@ class HTMLNode:
       string_repr += string_to_add
     print(string_repr)
     return string_repr
+  
+  def get_tag(self):
+    return self.__tag
       

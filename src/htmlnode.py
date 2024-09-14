@@ -1,3 +1,6 @@
+from textnode import *
+
+
 class HTMLNode:
   def __init__(self, tag=None, value=None, children=None, props=None):
     #html tag name like <a>
@@ -30,6 +33,8 @@ class HTMLNode:
   
   def get_tag(self):
     return self._tag
+  
+
       
 
 class LeafNode(HTMLNode):

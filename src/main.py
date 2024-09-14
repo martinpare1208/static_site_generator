@@ -10,3 +10,7 @@ a_html_node = HTMLNode(props={
   "href": 'youtube.com',
   "src": "images/hello.png"
 })
+
+
+leaf_node = a_text_node.text_node_to_html_node()
+leaf_node.to_html()

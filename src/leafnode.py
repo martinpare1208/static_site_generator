@@ -2,11 +2,16 @@ from htmlnode import *
 
 
 class LeafNode(HTMLNode):
-  def __init__(self, tag, value, props):
+  def __init__(self, tag, value, props=None):
     super().__init__(tag, props)
     self._value = value
     self._tag = tag
     self._props = props
+    
+  def __eq__(self, other):
+    if (self._value == other._value) and (self._tag == other._tag) and (self._props == other._props):
+      return True
+    return False
     
   def to_html(self):
       if self._value is None:
@@ -21,11 +26,5 @@ class LeafNode(HTMLNode):
         return html_string
       
       
-a_leaf_node = LeafNode('a', 'Hello', {
-  'href': 'www.youtube.com',
-  'src': 'hello.img'
-})
-
-a_leaf_node.to_html()
 
 

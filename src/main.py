@@ -14,3 +14,7 @@ a_html_node = HTMLNode(props={
 
 leaf_node = a_text_node.text_node_to_html_node()
 leaf_node.to_html()
+
+words = f"This is text with a ` code block ` word"
+wordy = f'Super  i am `super` `not`'
+print(wordy.split('`'))

@@ -5,23 +5,19 @@ text_type_code = "code"
 text_type_link = "link"
 text_type_image = "image"
 
-class TextNode:
-  def __init__(self, text, text_type, url=None):
-    self.__text = text
-    self.__text_type = text_type
-    self.__url = url
-    
-  def __eq__(self, other):
-    if (self.__text == other.__text) and (self.__text_type == other.__text_type) and (self.__url == other.__url):
-      return True
-    return False
-  
-  def get_url(self):
-    return self.__url
-  
-  def get_text_type(self):
-    return self.__text_type
-  
-  def __repr__(self):
-    return f'TextNode({self.__text}, {self.__text_type}, {self.__url})'
 
+class TextNode:
+    def __init__(self, text, text_type, url=None):
+        self.text = text
+        self.text_type = text_type
+        self.url = url
+
+    def __eq__(self, other):
+        return (
+            self.text_type == other.text_type
+            and self.text == other.text
+            and self.url == other.url
+        )
+
+    def __repr__(self):
+        return f"TextNode({self.text}, {self.text_type}, {self.url})"

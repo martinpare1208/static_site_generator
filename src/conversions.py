@@ -1,4 +1,12 @@
 from textnode import *
+import re
+
+
+def extract_markdown_images(text):
+    
+    
+    
+    return
 
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     nodes = []
@@ -36,3 +44,20 @@ print(new_nodes_bold)
 # Call the function with a code delimiter on the result of the first call
 final_nodes = split_nodes_delimiter(new_nodes_bold, "`", text_type_code)
 print(final_nodes)
+
+
+
+def extract_markdown_images(text):
+    pattern = r"!\[(.*?)\]\((.*?)\)"
+    matches = re.findall(pattern, text)
+    return matches
+
+
+def extract_markdown_links(text):
+    pattern = r"(?<!!)\[(.*?)\]\((.*?)\)"
+    matches = re.findall(pattern, text)
+    return matches
+
+
+text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
+print(extract_markdown_images(text))

@@ -1,3 +1,10 @@
+block_type_paragraph = "paragraph"
+block_type_heading = "heading"
+block_type_code = "code"
+block_type_quote = "quote"
+block_type_olist = "ordered_list"
+block_type_ulist = "unordered_list"
+
 from textnode import *
 import re
 
@@ -132,3 +139,88 @@ def split_nodes_link(old_nodes):
     
 text = [TextNode("This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)", text_type_text,)]
 print(split_nodes_image(text))
+
+
+"""
+        Function:
+        raw string into a list of textnodes.
+"""
+
+def text_to_textnodes(text):
+    delimiters = [['**',text_type_bold], ['*', text_type_italic], ['`',text_type_code]]
+    text = [TextNode(text, text_type_text, None)]
+    nodes = split_nodes_image(text)
+    nodes = split_nodes_link(nodes)
+    for each_delimiter in delimiters:
+        nodes = split_nodes_delimiter(nodes, each_delimiter[0], each_delimiter[1])
+    return nodes
+
+
+string_test = 'This is **text** with an *italic* word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)'
+print(text_to_textnodes(string_test))
+
+
+"""
+Function: Take raw markdown blocks into a list of strings
+"""
+
+def markdown_to_blocks(markdown):
+    markdown = markdown.split('\n')
+    new_markdown = []
+    for each_markdown in markdown:
+        each_markdown = each_markdown.strip()
+        if each_markdown != '':
+            new_markdown.append(each_markdown)
+    return new_markdown
+
+
+md = '''
+# Markdown
+> Markdown
+> Markdown
+'''
+print(markdown_to_blocks(md))
+
+
+def block_to_block_type(block):
+    lines = block.split("\n")
+
+    if (
+        block.startswith("# ")
+        or block.startswith("## ")
+        or block.startswith("### ")
+        or block.startswith("#### ")
+        or block.startswith("##### ")
+        or block.startswith("###### ")
+    ):
+        return block_type_heading
+    if len(lines) > 1 and lines[0].startswith("```") and lines[-1].startswith("```"):
+        return block_type_code
+    if block.startswith(">"):
+        for line in lines:
+            if not line.startswith(">"):
+                return block_type_paragraph
+        return block_type_quote
+    if block.startswith("* "):
+        for line in lines:
+            if not line.startswith("* "):
+                return block_type_paragraph
+        return block_type_ulist
+    if block.startswith("- "):
+        for line in lines:
+            if not line.startswith("- "):
+                return block_type_paragraph
+        return block_type_ulist
+    if block.startswith("1. "):
+        i = 1
+        for line in lines:
+            if not line.startswith(f"{i}. "):
+                return block_type_paragraph
+            i += 1
+        return block_type_olist
+    return block_type_paragraph
+a_block = '1. Hello\n2. Hello'
+print(block_to_block_type(a_block))
+
+
+
